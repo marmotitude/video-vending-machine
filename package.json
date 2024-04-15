@@ -1,0 +1,24 @@
+{
+  "name": "video-vending-machine",
+  "version": "0.1.0",
+  "description": "Example of a downloads vending machine using a service API(alby? opennode?) for payments and Magalu Object API for objects hosting",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Fabricio C Zuardi and AUTHORS",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marmotitude/video-vending-machine.git"
+  },
+  "bugs": {
+    "url": "https://github.com/marmotitude/video-vending-machine/issues"
+  },
+  "homepage": "https://github.com/marmotitude/video-vending-machine#readme",
+  "dependencies": {
+    "axios": "^1.6.8",
+    "express": "^4.19.2"
+  }
+}
