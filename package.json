@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/marmotitude/video-vending-machine#readme",
   "dependencies": {
+    "aws-sdk": "^2.1599.0",
     "axios": "^1.6.8",
     "express": "^4.19.2"
   }
