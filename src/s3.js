@@ -21,6 +21,7 @@ const s3Client = new S3Client({
 
 // Function to generate presigned URL for an S3 object
 export async function generatePresignedUrl(bucketName, objectKey, expirationSeconds = 3600) {
+    console.log({bucketName, objectKey})
     const command = new GetObjectCommand({
         Bucket: bucketName,
         Key: objectKey

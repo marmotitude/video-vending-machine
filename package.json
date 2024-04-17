@@ -2,7 +2,7 @@
   "name": "video-vending-machine",
   "version": "0.1.0",
   "description": "Example of a downloads vending machine using a service API(alby? opennode?) for payments and Magalu Object API for objects hosting",
-  "main": "./src/server.js",
+  "main": "./src/server.mjs",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

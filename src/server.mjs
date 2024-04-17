@@ -1,4 +1,4 @@
-// ./src/server.js
+// ./src/server.mjs
 import express from 'express';
 import { generatePresignedUrl } from './s3.js';
 import { generateInvoice } from './alby.js';
@@ -37,7 +37,7 @@ app.get('/products/:productId/invoice', async (req, res) => {
 });
 
 // Endpoint to get presigned URL to download a product
-app.get('/product/:productId/download', async (req, res) => {
+app.get('/products/:productId/download', async (req, res) => {
     const productId = req.params.productId;
     const product = products[productId];
 

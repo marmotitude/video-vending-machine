@@ -8,6 +8,11 @@ as featured in [this presentation](https://docs.google.com/presentation/d/1pC5XI
 ```
 cp .env.example .env
 vim .env
-curl localhost:3000/products/a/invoice | jq .invoice | ./node_modules/.bin/qrcode-terminal
+node .
+```
+
+```
+curl localhost:3000/products/a/invoice | jq -r .invoice | tee product_a_invoice.txt 
+cat product_a_invoice.txt | ./node_modules/.bin/qrcode-terminal
 curl localhost:3000/products/a/download
 ```
