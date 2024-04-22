@@ -13,14 +13,14 @@ node .
 
 ```
 # generate invoice to unlock the download
-curl localhost:3000/products/a/invoice | jq -r .invoice | tee product_a_invoice.txt 
+curl localhost:3000/products/a/invoice | jq . | tee product_a_invoice.json
 
 # print the invoice as a QR Code in the terminal (and pay it with a mobile wallet)
-cat product_a_invoice.txt | ./node_modules/.bin/qrcode-terminal
+cat product_a_invoice.json | jq -r .payment_request | ./node_modules/.bin/qrcode-terminal
 
-# print the temporary download URL of the paid product
-curl localhost:3000/products/a/download
+# print the temporary download URL of the paid product (will have status 402 if not paid)
+curl -v localhost:3000/products/a/download?payment_hash=$(cat product_a_invoice.json |jq -r .payment_hash)
 
 # follow the redirect to the contents
-curl localhost:3000/products/a/downloada -L
+curl -L localhost:3000/products/a/download?payment_hash=$(cat product_a_invoice.json |jq -r .payment_hash)
 ```

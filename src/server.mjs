@@ -1,7 +1,7 @@
 // ./src/server.mjs
 import express from 'express';
 import { generatePresignedUrl } from './s3.js';
-import { generateInvoice } from './alby.js';
+import { generateInvoice, getInvoice } from './alby.js';
 
 const app = express();
 const port = 3000;
@@ -29,7 +29,7 @@ app.get('/products/:productId/invoice', async (req, res) => {
         const invoice = await generateInvoice(product.price, product.description);
 
         // Return the invoice details as JSON response
-        res.status(200).json({ invoice });
+        res.status(200).json(invoice);
     } catch (error) {
         console.error('Error creating invoice:', error);
         res.status(500).send('Error creating invoice');
@@ -40,13 +40,21 @@ app.get('/products/:productId/invoice', async (req, res) => {
 app.get('/products/:productId/download', async (req, res) => {
     const productId = req.params.productId;
     const product = products[productId];
+    const paymentHash = req.query.payment_hash;
+    const expirationSeconds = 3600; // Presigned URL expiration time (1 hour)
 
+    // check if product id is valid
     if (!product) {
         return res.status(404).send('Product not found');
     }
 
-    const expirationSeconds = 3600; // Presigned URL expiration time (1 hour)
+    // check if invoice was paid
+    const invoice = await getInvoice(paymentHash)
+    if (!invoice.settled){
+        return res.status(402).json(invoice);
+    }
 
+    // generate temporary link
     try {
         // Generate presigned URL for S3 object (product image)
         const presignedUrl = await generatePresignedUrl(process.env.S3_BUCKET_NAME, product.key, expirationSeconds);
