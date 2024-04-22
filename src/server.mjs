@@ -51,9 +51,10 @@ app.get('/products/:productId/download', async (req, res) => {
         // Generate presigned URL for S3 object (product image)
         const presignedUrl = await generatePresignedUrl(process.env.S3_BUCKET_NAME, product.key, expirationSeconds);
 
-        // Redirect client to the presigned URL (or you can return the URL as JSON response)
+        // Redirect client to the presigned URL
         res.redirect(presignedUrl);
     } catch (error) {
+        console.log({error})
         console.error('Error generating presigned URL:', error);
         res.status(500).send('Error generating presigned URL');
     }
